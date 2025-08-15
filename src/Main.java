@@ -1,15 +1,56 @@
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+import entities.People;
+
+import java.util.Locale;
+import java.util.Scanner;
+
 public class Main {
     public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
+        Locale.setDefault(Locale.US);
+        Scanner sc = new Scanner(System.in);
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            System.out.println("i = " + i);
+        System.out.print("How many people will be entered? ");
+        int n = sc.nextInt();
+        sc.nextLine();
+
+        People[] people = new People[n];
+
+        for (int i = 0; i < people.length; i++) {
+            System.out.printf("Data of person %d:%n", i + 1);
+
+            System.out.print("Name: ");
+            String name = sc.nextLine();
+
+            System.out.print("Age: ");
+            int age = sc.nextInt();
+
+            System.out.print("Height: ");
+            double height = sc.nextDouble();
+            sc.nextLine();
+
+            people[i] = new People(name, age, height);
         }
+
+        double sumHeight = 0.0;
+        int countUnder16 = 0;
+
+        for (People p : people) {
+            sumHeight += p.getHeight();
+            if (p.getAge() < 16) {
+                countUnder16++;
+            }
+        }
+
+        double averageHeight = sumHeight / people.length;
+        double percentageUnder16 = (countUnder16 * 100.0) / people.length;
+
+        System.out.printf("Average height: %.2f%n", averageHeight);
+        System.out.printf("People under 16: %.1f%%%n", percentageUnder16);
+
+        for (People p : people) {
+            if (p.getAge() < 16) {
+                System.out.println(p.getName());
+            }
+        }
+        sc.close();
     }
 }
